@@ -1,0 +1,19 @@
+Vagrant.configure("2") do |config |
+	config.vm.define "localhost" do |localhost|
+		localhost.vm.box = "localhost"
+		localhost.vm.hostname = "localhost.local"
+		localhost.vm.box_url = "http://cloud.centos.org/centos/8/vagrant/x86_64/images/CentOS-8-Vagrant-8.2.2004-20200611.2.x86_64.vagrant-virtualbox.box"
+		localhost.vm.network "private_network", type: "dhcp"
+		#localhost.vm.network "forwarded_port", guest: 8080, host: 8080
+		localhost.vm.network "public_network"
+		#localhost.vm.provision :shell, :path => "web-bootstrap.sh"
+		localhost.vm.boot_timeout = 600
+		localhost.vm.synced_folder "C:/Shared/", "/home/vagrant/shred_localhost/"
+		localhost.vm.provider  "virtualbox" do |v|
+			v.memory = "2048"
+			v.cpus = "2"
+		end
+		localhost.ssh.forward_x11=true
+	end
+	
+end
